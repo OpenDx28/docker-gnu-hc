@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gnu-hc-vnc
+  namespace: gnu-hc
+  labels:
+    app.kubernetes.io/name: gnu-hc
+    app.kubernetes.io/component: gnu-hc
+spec:
+  selector:
+    app.kubernetes.io/name: gnu-hc
+  ports:
+    - protocol: TCP
+      name: vnc
+      port: 6901
+      targetPort: 6901

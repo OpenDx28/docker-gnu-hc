@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gnu-hc
+  namespace: gnu-hc
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate: {}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gnu-hc
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gnu-hc
+        app.kubernetes.io/component: gnu-hc
+    spec:
+      containers:
+        - name: gnu-hc
+          image: ghcr.io/ispana/gnu-hc:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 200m
+              memory: 300Mi
+            limits: {}
+          # readinessProbe:
+          #   initialDelaySeconds: 5
+          #   timeoutSeconds: 5
+          #   periodSeconds: 5
+          #   httpGet:
+          #     port: 8085
+          #     path: /
+          #     scheme: HTTP
+          envFrom:
+            - secretRef:
+                name: gnu-hc-secret
+            - configMapRef:
+                name: gnu-hc-config
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: cache-volume
+      volumes:
+        - name: cache-volume
+          emptyDir:
+            medium: Memory
+            sizeLimit: 512Mi
+      securityContext:
+        runAsUser: 0
+      imagePullSecrets:
+        - name: registry-creds
