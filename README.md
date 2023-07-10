@@ -8,7 +8,7 @@ Build the image locally:
 
 ```bash
 cd src
-docker build -t gnu-hc . 
+docker build -t gnu-hc --build-arg BASE_IMAGE="vnc-base:latest" .
 ```
 
 Run the image locally:
