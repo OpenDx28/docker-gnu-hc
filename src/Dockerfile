@@ -17,6 +17,12 @@ WORKDIR $HOME
 COPY ./install_gnu_hc.sh $INST_SCRIPTS/gnu_hc/
 RUN bash $INST_SCRIPTS/gnu_hc/install_gnu_hc.sh && rm -rf $INST_SCRIPTS/gnu_hc/
 
+# Install WebDAV
+RUN apt-get -y update \
+    && apt-get -y install python2 python-kid \
+    && apt-get clean
+COPY ./easydav /opt/easydav
+
 # Custom startup script
 COPY ./custom_startup.sh $STARTUPDIR/custom_startup.sh
 RUN chmod 755 $STARTUPDIR/custom_startup.sh
