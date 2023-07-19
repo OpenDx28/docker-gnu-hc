@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: gnu-hc
-          image: ghcr.io/ispana/gnu-hc:latest
+          image: ghcr.io/opendx28/gnu-hc:latest
           imagePullPolicy: Always
           resources:
             requests:
