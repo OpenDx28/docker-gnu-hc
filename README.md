@@ -1,6 +1,6 @@
 # docker-gnu-hc
 
-This repository holds a Docker image configured to run the GNU Health Client application in a VNC server compatible with 3D acceleration using Nvidia GPUs.
+This repository holds a Docker image configured to run the GNU Health Client application in a VNC server compatible with 3D acceleration using Nvidia GPUs. It also includes a WebDAV server with a web UI running on port 8085.
 
 ## Instructions
 
@@ -8,16 +8,20 @@ Build the image locally:
 
 ```bash
 cd src
-docker build -t gnu-hc . 
+docker build -t gnu-hc --build-arg BASE_IMAGE="vnc-base:latest" .
 ```
 
 Run the image locally:
 
 ```bash
-docker run --rm -it --gpus all --shm-size=512m -p 6901:6901 -e VNC_DISABLE_AUTH=true --user root gnu-hc
+docker run --rm -it --gpus all --shm-size=512m -p 6901:6901 -p 8085:8085 -e VNC_DISABLE_AUTH=true --user root gnu-hc
 ```
 
-Open a browser and go to: https://localhost:6901
+To access GNU Health Client locally through VNC:
+- Open a browser and go to: http://localhost:6901
+
+To access the WebDAV UI locally:
+- Open a browser and go to: http://localhost:8085
 
 ## Configuration
 
